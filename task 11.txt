@@ -1,0 +1,174 @@
+#include<iostream.h>
+#include<graphics.h>
+#include<conio.h>
+#include<dos.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+//function prototypes...
+void board();
+void input();
+int random_num_gen();
+
+//global variables...
+int global = 0;
+int move = 0;
+
+//function definitions follow...
+
+//function for drawing the board...
+void board()
+{
+   int gd = DETECT, gm;
+   int l,r,t,b;
+   initgraph(&gd,&gm, "c:/turboc3/bgi");
+   setviewport(10,10,200,200,0);
+   setbkcolor(DARKGRAY);
+
+//code to generate checkerboard
+   int counter1 = 10,x1 = 0,x2 = 40,y1 = 40,y2 = 80;
+   setcolor(CYAN);
+   while(counter1 >0)
+   {
+    int counter2 = 10;
+	while(counter2 > 0)
+	{
+	   rectangle(x1,y1,x2,y2);
+	   x1+=40; x2 +=40;counter2--;
+	}
+    counter1--;
+    x1= 0; x2=40;y1+=40;y2+=40;
+    }
+
+    //code to generate grid numbers
+       //left to right
+	int num = 1;
+	x1 = 0,x2 = 40,y1 = 400,y2 = 440;
+	 counter1 = 5;
+	 char str[3];
+	     setcolor(GREEN);
+	     while (counter1 > 0)
+	     {
+	       int counter2 = 10;
+		while(counter2 > 0)
+		{
+		sprintf(str,"%d",num);
+		outtextxy(((x1)+(x2))/2,(y1+y2)/2,str);
+		x1+=40; x2 +=40;counter2--;
+		num++;
+		}
+	     counter1--;
+	     x1= 0; x2=40;y1-=80;y2-=80;num+=10;
+	     }
+       //right to left
+	num = 11;
+	x1 =360,x2 = 400,y1 = 320,y2 = 440;
+	  counter1 = 5;
+	   while (counter1 > 0)
+	   {
+	    int counter2 = 10;
+	    while(counter2 > 0)
+	      {
+		sprintf(str,"%d",num);
+		outtextxy(((x1)+(x2))/2,(y1+y2)/2,str);
+		x1-=40; x2 -=40;counter2--;
+		num++;
+	      }
+	   counter1--;
+	    x1= 360; x2=400;y1-=80;y2-=80;num+=10;
+	   }
+
+//code to draw ladders...
+//ladder 1
+  setcolor(YELLOW);
+  setlinestyle(SOLID_LINE,0,2);
+  line(180,255,295,405);
+  line(195,250,315,405);
+  int count_leg = 3, a1 = 290, a2 = 300, b1 = 400, b2 = 390;
+    while ( count_leg > 0 )
+     {
+       a1-=30,a2-=30,b1-=40,b2-=40;
+       line(a1,b1,a2,b2);
+       count_leg--;
+     }
+
+//ladder 2
+  setcolor(YELLOW);
+  setlinestyle(SOLID_LINE,0,2);
+  line(64,190,24,95);
+  line(44,190,4,95);
+  line(36,125,18,128);
+  line(52,162,33,165);
+
+//code to draw snakes
+//snake 1
+  setcolor(RED);
+  setlinestyle(SOLID_LINE,0,3);
+  arc(270,268,330,40,20);
+  arc(334,355,120,182,90);
+  setlinestyle(SOLID_LINE,0,2);
+  arc(320,360,179,230,75);
+  circle(288,254,3);
+  putpixel(288,254,YELLOW);
+  line(290,254,293,252);
+
+//code to display the controls...
+setcolor(YELLOW);
+outtextxy(480,40,"CONTROLS : ");
+outtextxy(420,60,"SPACE - Roll The Die");
+outtextxy(420,80,"E - Exit");
+
+//calling function for taking input...
+input();
+
+getch();
+closegraph();
+}
+
+//function for generating random number...
+void rand_generator()
+{
+randomize();
+for(int p = 0; p <= 100; p++)
+rand_arr[p] = rand() % 6 + 1;
+}
+
+clearviewport();
+closegraph();
+board();
+	  }
+	else if(inp1 == 'E' || inp1 == 'e')
+	  {
+	cleardevice();
+	settextstyle(1,0,0);
+	outtextxy(150,120,"Are you sure ");
+	outtextxy(170,150,"want to quit??(y/n)");
+	char choice = getche();
+		if(choice == 'y'|| choice == 'Y')
+		{exit(0);}
+		else if(choice=='n' || choice == 'N')
+		{
+		outtextxy(150,200,"Press any key to continue..");
+		char temp = getche();
+			if(temp)
+			{
+			cleardevice();
+			board();
+			}
+		}
+	 }
+    }
+}
+
+//main function...
+main()
+{
+int gd = DETECT, gm;
+initgraph(&gd,&gm, "c:/turboc3/bgi");
+rand_generator();
+home();
+how_to_play();
+board();
+getch();
+}
